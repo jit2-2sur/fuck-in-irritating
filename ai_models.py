@@ -5,7 +5,8 @@ import os
 from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain_google_genai import GoogleGenerativeAI
 
-api_key = os.environ.get("GOOGLE_API_KEY")
+
+api_key = os.environ.get("GOOGLE_API_KEY")  # provide your own palm api key
 
 LLM_MODEL_NAME = "models/text-bison-001"
 EMBED_MODEL_NAME = "sentence-transformers/all-mpnet-base-v2"

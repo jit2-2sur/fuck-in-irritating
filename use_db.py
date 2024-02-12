@@ -36,7 +36,7 @@ print(langchain_chroma.get()["documents"][1])
 #mychromadb.embed_document(persist_dir=PERSIST_DIRECTORY, file_path="./story1.pdf", collection_name="mysecondcollection")
 
 db = mychromadb.get_db()
-print(db._collection)
+#print(db._collection)
 #docs = db.get(where={'source': updated_url})
 #docs = db.get(where = {'source': 'D:\\fuck-in-irritating\\story1.pdf'})['documents']
 #print(f"{docs}")
@@ -53,8 +53,12 @@ print(db2._collection)
 #docs = db.get()
 #print(docs)
 
-docs = mychromadb.search_segment_in_db('moral of the story','story1.pdf')
+#docs = mychromadb.search_segment_in_db('moral of the story','story1.pdf')
 #print('\n\n',docs[0].page_content)
 
-ans = mychromadb.get_answer_from_palm('moral of the story','story1.pdf')
+#question = input('enter question')
+#pdf_name = input('enter pdf name')
+question = 'how many animals were killed by the lion for meal everyday?'
+pdf_name = 'story1.pdf'
+ans = mychromadb.get_answer_from_palm2(question= question, pdf_name= pdf_name)
 print('\n\n',ans)

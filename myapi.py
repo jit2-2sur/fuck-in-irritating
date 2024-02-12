@@ -1,22 +1,9 @@
 """module to implement fast api"""
 
 from fastapi import FastAPI, status, HTTPException
-from pydantic import BaseModel
 import mychromadb
 
 app = FastAPI()
-
-
-class File(BaseModel):
-    """class for file"""
-    file_path: str
-    file_name: str
-
-
-class Question(BaseModel):
-    """class for question"""
-    pdf_name: str
-    question: str
 
 
 @app.get("/")
@@ -50,9 +37,8 @@ async def upload_docs(pdf_path: str, pdf_name: str):
 async def get_answers(pdf_name: str, question: str):
     """for asking answers"""
     try:
-        ans = mychromadb.get_answer_from_palm(question, pdf_name)
-        response_data = {"message": "search was successful", "question": question, "answer": ans}
-        return response_data
+        ans = mychromadb.get_answer_from_palm2(question, pdf_name)
+        return ans
 
     except Exception as e:
         raise HTTPException(

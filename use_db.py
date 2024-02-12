@@ -54,4 +54,7 @@ print(db2._collection)
 #print(docs)
 
 docs = mychromadb.search_segment_in_db('moral of the story','story1.pdf')
-print(docs)
+#print('\n\n',docs[0].page_content)
+
+ans = mychromadb.get_answer_from_palm('moral of the story','story1.pdf')
+print('\n\n',ans)

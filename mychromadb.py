@@ -6,6 +6,8 @@ from langchain.chains import RetrievalQA
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_community.vectorstores import Chroma
+from langchain.prompts import PromptTemplate
+from langchain_core.output_parsers import StrOutputParser
 
 from ai_models import embed_model, llm
 
@@ -80,7 +82,20 @@ def search_segment_in_db(question, pdf_name):
 def get_answer_from_palm(question, pdf_name):
     """for getting answer from palm llm models"""
     context = search_segment_in_db(question, pdf_name)
-    answer = llm.invoke(question, context)
+    context = context[0].page_content
+    template = """
+    Context: {context}
+
+    Question: {question}
+
+    Answer:
+    """
+    prompt = PromptTemplate.from_template(template)
+    output_parser = StrOutputParser()
+
+    chain = prompt | llm | output_parser
+
+    answer = chain.invoke({'context': context, 'question': question})
     return answer
 
 

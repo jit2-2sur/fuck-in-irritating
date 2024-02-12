@@ -49,7 +49,15 @@ async def upload_docs(pdf_path: str, pdf_name: str):
 @app.get("/answers/{pdf_name}/{question}", status_code=status.HTTP_200_OK)
 async def get_answers(pdf_name: str, question: str):
     """for asking answers"""
-    
+    try:
+        ans = mychromadb.get_answer_from_palm(question, pdf_name)
+        response_data = {"message": "search was successful", "question": question, "answer": ans}
+        return response_data
+
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="internal server error"
+        ) from e
 
 
 if __name__ == "__main__":
